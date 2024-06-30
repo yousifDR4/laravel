@@ -15,7 +15,6 @@ class CommentFactory extends Factory
      *
      * @return array<string, mixed>
      */
-
     public function definition(): array
     {
    $postId=FactoryHelper::factoryHelper(post::class);
