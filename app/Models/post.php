@@ -6,9 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 class post extends Model
 {
     use HasFactory;
+    protected $fillable=[
+        "body","title","content"
+    ];
     protected $casts=[
         "body"=>"array"
     ];
+
     public function getTitleUpperCaseAttribute()
     {
         return strtoupper($this->title);

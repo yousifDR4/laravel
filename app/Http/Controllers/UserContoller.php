@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\comment;
 use Illuminate\Http\JsonResponse;
 use App\Models\User;
@@ -13,9 +14,9 @@ class UserContoller extends Controller
      */
     public function index()
     {
-    return new JsonResponse([
-        "data"=>"new"
-    ]);
+        return new JsonResponse([
+            "data" => "new"
+        ]);
     }
 
     /**
@@ -23,11 +24,10 @@ class UserContoller extends Controller
      */
     public function store(Request $request)
     {
-       dump($request);
+        dump($request);
         return new JsonResponse([
-            "data"=>"new"
+            "data" => "new"
         ]);
-
     }
 
     /**
@@ -37,7 +37,7 @@ class UserContoller extends Controller
     {
         dump($id);
         return new JsonResponse([
-            "data"=>" new"
+            "data" => " new"
         ]);
     }
 
@@ -48,7 +48,7 @@ class UserContoller extends Controller
     {
         dump($request);
         return new JsonResponse([
-            "data"=>$id
+            "data" => $id
         ]);
     }
 
@@ -59,7 +59,7 @@ class UserContoller extends Controller
     {
         dump($id);
         return new JsonResponse([
-            "data"=>$id
+            "data" => $id
         ]);
     }
 }
