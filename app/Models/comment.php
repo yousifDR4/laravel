@@ -10,4 +10,7 @@ class comment extends Model
     use HasFactory; protected $casts=[
         "body"=>"array"
     ];
+    public function post(){
+        return $this->belongsTo(post::class,"post_id");
+    }
 }
