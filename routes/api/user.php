@@ -1,7 +1,7 @@
 <?php
 use App\Http\Controllers\UserContoller;
 use Illuminate\Support\Facades\Route;
-route::middleware("auth")->prefix("")->name("users.")->group(function(){
+route::prefix("")->withoutMiddleware("auth")->group(function(){
 route::get("user",[UserContoller::class,"index"]);
 route::get("user/{id}",[UserContoller::class,"show"])->where("id","[0,9]+");
 route::put("user/",[UserContoller::class,"store"]);

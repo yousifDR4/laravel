@@ -1,10 +1,10 @@
 <?php
 use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
-route::group(function(){
-route::get("comment",[CommentController::class,"index"]);
-route::get("comment/{id}",[CommentController::class,"show"]);
-route::put("comment/",[CommentController::class,"store"]);
-route::put("comment/{id}",[CommentController::class,"update"]);
-route::delete("comment/{id}",[CommentController::class,"destroy"]);
+Route::controller(CommentController::class)->group(function () {
+    Route::get('/comments', 'index');
+    Route::get('/comments/{id}', 'show');
+    Route::post('/comments', 'store');
+    Route::put('/comments/{id}', 'update');
+    Route::delete('/comments/{id}', 'destroy');
 });

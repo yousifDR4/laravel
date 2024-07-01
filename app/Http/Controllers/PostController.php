@@ -6,6 +6,7 @@ use App\Models\post;
 use App\Http\Requests\StorepostRequest;
 use App\Http\Requests\UpdatepostRequest;
 use App\Repositories\PostRepository;
+
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,6 +17,7 @@ class PostController extends Controller
      */
     public function index()
     {
+        // throw new \Exception("error");
         $post = post::query()->get();
         return new JsonResponse([
             "data" => $post
@@ -29,8 +31,13 @@ class PostController extends Controller
         $created = $repository->create($request->only([
             'title',
             'body',
-            "content"
+            "content","user_id"
         ]));
+        if($created===404){
+            return new JsonResponse([
+                "code" => $created,"message"=>""
+            ],404);
+        }
         return new JsonResponse([
             "date" => $created
         ]);

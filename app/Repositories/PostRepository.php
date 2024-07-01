@@ -7,14 +7,23 @@ class PostRepository extends BaseRepository
     public function create(array $attributes)
     {
         $created = DB::transaction(function () use ($attributes) {
-
-            $created = post::query()->create([
+            if (empty($userId))
+           return 404;
+            try{
+            $created = Post::query()->create([
                 'title' => data_get($attributes, "title"),
                 'body' => data_get($attributes, "body"),
-                "content" => data_get($attributes, "content")
+                'content' => data_get($attributes, "content")
             ]);
-            $created->user()->sync(data_get($attributes, "user_id"));
-            return $created;
+            $userId = data_get($attributes, "user_id");
+            if (!empty($userId)) {
+                $created->user()->attach($userId);
+                return $created;
+            }
+        }
+            catch(\Exception $e){
+                return $e;
+            }
         });
         return $created;
     }

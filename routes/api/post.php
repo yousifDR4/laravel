@@ -1,10 +1,10 @@
 <?php
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
-route::group(function(){
-route::get("post",[PostController::class,"index"]);
-route::get("post/{id}",[PostController::class,"show"]);
-route::put("post/",[PostController::class,"store"]);
-route::post("post/{id}",[PostController::class,"update"]);
-route::delete("post/{id}",[PostController::class,"destroy"]);
+Route::controller(PostController::class)->group(function () {
+    Route::get('/posts', 'index');
+    Route::get('/posts/{id}', 'show');
+    Route::post('/posts', 'store');
+    Route::put('/posts/{id}', 'update');
+    Route::delete('/posts/{id}', 'destroy');
 });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserCreated;
 use App\Models\comment;
 use Illuminate\Http\JsonResponse;
 use App\Models\User;
@@ -14,8 +15,10 @@ class UserContoller extends Controller
      */
     public function index()
     {
+        event(new UserCreated(User::factory()->create()));
+        $users = User::query()->get();
         return new JsonResponse([
-            "data" => "new"
+            "data" => $users
         ]);
     }
 
@@ -24,12 +27,15 @@ class UserContoller extends Controller
      */
     public function store(Request $request)
     {
-        dump($request);
+        $created=User::query()->create([
+            "email"=>$request->email,
+          "name"=>$request->name
+          ]);
         return new JsonResponse([
-            "data" => "new"
+            "data" => "created"
         ]);
+        event(new UserCreated($created));
     }
-
     /**
      * Display the specified resource.
      */
@@ -57,7 +63,7 @@ class UserContoller extends Controller
      */
     public function destroy(User $id)
     {
-        dump($id);
+        dd($id);
         return new JsonResponse([
             "data" => $id
         ]);

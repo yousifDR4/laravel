@@ -17,6 +17,10 @@ class post extends Model
     {
         return strtoupper($this->title);
     }
+    public function setTitleAttribute($value)
+{
+  $this->attributes['title'] = strtolower($value);
+}
 public function comment(){
     return $this->hasMany(comment::class,"post_id");
 }
