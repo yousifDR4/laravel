@@ -7,6 +7,7 @@ class PostRepository extends BaseRepository
     public function create(array $attributes)
     {
         $created = DB::transaction(function () use ($attributes) {
+            $userId = data_get($attributes, "user_id");
             if (empty($userId))
            return 404;
             try{
@@ -15,7 +16,7 @@ class PostRepository extends BaseRepository
                 'body' => data_get($attributes, "body"),
                 'content' => data_get($attributes, "content")
             ]);
-            $userId = data_get($attributes, "user_id");
+
             if (!empty($userId)) {
                 $created->user()->attach($userId);
                 return $created;
