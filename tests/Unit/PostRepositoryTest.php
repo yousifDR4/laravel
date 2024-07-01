@@ -7,8 +7,6 @@ use App\Repositories\PostRepository;
 
 class PostRepositoryTest extends TestCase
 {
-
-
     public function test_basic_test():void
     {
         $postData = [
@@ -16,7 +14,6 @@ class PostRepositoryTest extends TestCase
             'content' => 'This is a test post content.',
             "user_id"=>1
         ];
-
         // Use dependency injection to resolve PostRepository
         $repository = $this->app->make(PostRepository::class);
         $createdPost = $repository->create($postData);
@@ -28,6 +25,5 @@ class PostRepositoryTest extends TestCase
         $this->assertEquals($postData["title"], $createdPost->title,"NOT created");
         $this->assertEquals($postData["title"], $createdPost->title,"NOT created");
         $this->assertEquals($postData["title"], $createdPost->title,"NOT created");
-
     }
 }
