@@ -1,10 +1,14 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use App\Models\post;
 use App\Http\Requests\StorepostRequest;
 use App\Http\Requests\UpdatepostRequest;
+use App\Repositories\PostRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 class PostController extends Controller
 {
     /**
@@ -12,23 +16,23 @@ class PostController extends Controller
      */
     public function index()
     {
-        $post=post::query()->get();
+        $post = post::query()->get();
         return new JsonResponse([
-            "data"=>$post
+            "data" => $post
         ]);
     }
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, PostRepository $repository)
     {
-        $created=Post::create([
-            'title' => $request->title,
-            'body' => $request->body,
-            "content"=>$request->content
-        ]);
+        $created = $repository->create($request->only([
+            'title',
+            'body',
+            "content"
+        ]));
         return new JsonResponse([
-            "date"=>$created
+            "date" => $created
         ]);
     }
 
@@ -38,38 +42,38 @@ class PostController extends Controller
     public function show(post $id)
     {
         return new JsonResponse([
-            "data"=>$id
+            "data" => $id
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, post $id)
+    public function update(Request $request, post $id, PostRepository $repository)
     {
-        $updated=$id->update([
-            'title' => $request->title ?? $id->title,
-            'body' => $request->body ?? $id->body,
-            "content"=>$request->content ?? $id->content
-        ]);
+        $updated = $repository->update($request->only([
+            'title',
+            'body',
+            "content"
+        ]),$id);
         return new JsonResponse([
-            "date"=>$id
+            "date" => $id
         ]);
     }
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(post $id)
+    public function destroy(post $id,PostRepository $repository)
     {
-        $isdeleted=$id->forceDelete();
-        if($isdeleted===true)
-        return new JsonResponse([
-            "date"=>"deleted"
-        ]);
-        else{
+        $isdeleted = $repository->forcedelete($id);
+        if ($isdeleted === true)
             return new JsonResponse([
-                "date"=>"not deleted"
-            ],400);
+                "date" => "deleted"
+            ]);
+        else {
+            return new JsonResponse([
+                "date" => "not deleted"
+            ], 400);
         }
     }
 }

@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class comment extends Model
 {
-    use HasFactory; protected $casts=[
+    use HasFactory;
+    protected $fillable=[
+        "body","content"
+    ];
+    protected $casts=[
         "body"=>"array"
     ];
     public function post(){
