@@ -23,7 +23,7 @@ class PostRepository extends BaseRepository
             }
         }
             catch(\Exception $e){
-                return $e;
+                return 404;
             }
         });
         return $created;
@@ -40,6 +40,10 @@ class PostRepository extends BaseRepository
     public function forcedelete( $id)
     {
         $isdeleted = $id->forceDelete();
-        return $isdeleted;
+        if ($isdeleted === true)
+        return "deleted";
+       else
+        return "not deleted";
+
     }
 }

@@ -15,7 +15,7 @@ class PostController extends Controller
         $post = post::query()->get();
         return new JsonResponse([
             "data" => $post
-        ]);
+        ],200);
     }
     /**
      * Store a newly created resource in storage.
@@ -68,14 +68,9 @@ class PostController extends Controller
     public function destroy(post $id,PostRepository $repository)
     {
         $isdeleted = $repository->forcedelete($id);
-        if ($isdeleted === true)
-            return new JsonResponse([
-                "date" => "deleted"
-            ]);
-        else {
-            return new JsonResponse([
-                "date" => "not deleted"
-            ], 400);
-        }
+
+        return new JsonResponse([
+            "date" => $isdeleted
+        ]);
     }
 }
