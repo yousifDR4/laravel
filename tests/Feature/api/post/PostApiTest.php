@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\api\post;
 use App\Models\post;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -24,14 +25,33 @@ class PostApiTest extends TestCase
         $post_id = $post->id;
         $response = $this->json('GET', "api/posts/{$post_id}");
         $data = collect($response->json("data"))->only(array_keys($post->getAttributes()));
-        dump($post);
-        dump($data);
         $data->each(function ($value,$key) use($post){
-
             if($key!=="created_at"&& $key!== "updated_at")
             $this->assertSame(data_get($post,$key),$value);
         }
         );
     }
+    public function test_create()
+{
+    // Create a post and a user using factories
+    $post = Post::factory()->create();
+    $user = User::factory()->create();
+
+    // Make a JSON POST request to the 'api/posts' endpoint
+    $response = $this->json('POST', 'api/posts', [
+            'title' => $post->title,
+            'body' => $post->body,
+            'content' => $post->content,
+        'user_id' => $user->id
+    ]);
+    // Collect the response data and only keep the attributes of the post
+    $data = collect($response->json("date"))->only(['title', 'body', 'content']);
+    // Dump the response data
+    // Assert that each attribute in the response matches the post
+    $data->each(function($value, $key) use ($post) {
+        $this->assertSame(data_get($post, $key), $value);
+    });
+}
+
 
 }
