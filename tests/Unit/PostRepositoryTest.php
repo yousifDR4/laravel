@@ -1,29 +1,46 @@
 <?php
-
 namespace Tests\Unit;
-
+use App\Models\post;
 use Tests\TestCase;
 use App\Repositories\PostRepository;
-
 class PostRepositoryTest extends TestCase
 {
-    public function test_basic_test():void
+    public function test_create()
     {
         $postData = [
             'title' => 'test post',
             'content' => 'This is a test post content.',
             "user_id"=>1
         ];
-        // Use dependency injection to resolve PostRepository
         $repository = $this->app->make(PostRepository::class);
         $createdPost = $repository->create($postData);
-
-        // Assert that the created post is not null
         $this->assertNotNull($createdPost, "Failed to create post.");
+        $this->assertEquals($postData["title"], $createdPost->title,"NOT created title");
+        $this->assertEquals($postData["content"], $createdPost->content,"NOT created content");
+    }
+    public function test_update():void{
+        $repository = $this->app->make(PostRepository::class);
+        $temp=post::factory()->create();
+        $updated=$repository->update([
+            'title'=>"test",
+            'body'=>[],
+            "content"=>"lol"
 
-        // Assert that the created post matches the expected data
-        $this->assertEquals($postData["title"], $createdPost->title,"NOT created");
-        $this->assertEquals($postData["title"], $createdPost->title,"NOT created");
-        $this->assertEquals($postData["title"], $createdPost->title,"NOT created");
+        ],$temp);
+
+        $this->assertEquals($updated, true,"NOT created title");
+    }
+    public function test_delete():void{
+        $repository = $this->app->make(PostRepository::class);
+        $temp=post::factory()->create();
+        $deleteded=$repository->forcedelete($temp);
+        $this->assertEquals($deleteded, true,"not deleted");
+    }
+    public function test_delete_on_non_exisisted_post():void{
+        $repository = $this->app->make(PostRepository::class);
+        $temp=post::factory()->create();
+       $repository->forcedelete($temp);
+        $deleteded=$repository->forcedelete($temp);
+        $this->assertEquals($deleteded, false,"the post is already not exiting and got deleted");
     }
 }

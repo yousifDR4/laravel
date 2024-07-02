@@ -35,7 +35,7 @@ class PostRepository extends BaseRepository
                 'body' => data_get($attributes, "body"),
                 "content" => data_get($attributes, "content")
         ]);
-
+        return $updated;
     }
     public function forcedelete( $id)
     {

@@ -58,7 +58,8 @@ class PostController extends Controller
             "content"
         ]),$id);
         return new JsonResponse([
-            "date" => $id
+            "date" => $id,
+            "updated"=>$updated
         ]);
     }
     /**
