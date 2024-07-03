@@ -17,11 +17,17 @@ use Illuminate\Support\Facades\Route;
 require __DIR__ . "\api\user.php";
 require __DIR__ . "\api\comment.php";
 require __DIR__ . "\api\post.php";
-Route::get("/user/{id}/dddd",function(Request $Request,User $id){
-    dump($Request);
-        return new JsonResponse([
-            "data"=>$id
-        ]);
+Route::get("/test",function(Request $Request){
+    $collection=collect([
+        ["name"=>"ahmed"],["name"=>"ali"],["name"=>"yousif"]
+    ]);
+    return $collection->all();
+    // return $collection->filter(function ($items){
+    //     return $items["name"]==="ali";
+    // });
+        // return new JsonResponse([
+        //     "data"=>$id
+        // ]);
     });
 
 

@@ -15,9 +15,11 @@ class PostRepositoryTest extends TestCase
         $repository = $this->app->make(PostRepository::class);
         $createdPost = $repository->create($postData);
         if($createdPost===404){
+            dump("s");
        $this->assertTrue(true);
         }
         else{
+            dump("s");
         $this->assertNotNull($createdPost, "Failed to create post.");
         $this->assertEquals($postData["title"], $createdPost->title,"NOT created title");
         $this->assertEquals($postData["content"], $createdPost->content,"NOT created content");

@@ -1,9 +1,13 @@
 <?php
 namespace App\Http\Controllers;
+
 use App\Models\post;
-use App\Repositories\PostRepository;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Repositories\PostRepository;
+use App\Http\Requests\PostStoreRequest;
+use App\Http\Requests\StorepostRequest;
+
 class PostController extends Controller
 {
     /**
@@ -20,8 +24,9 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, PostRepository $repository)
+    public function store(PostStoreRequest $request, PostRepository $repository)
     {
+
         $created = $repository->create($request->only([
             'title',
             'body',

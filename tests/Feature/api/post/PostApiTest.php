@@ -1,5 +1,4 @@
 <?php
-
 namespace Tests\Feature\api\post;
 use App\Models\post;
 use App\Models\User;
@@ -42,16 +41,11 @@ class PostApiTest extends TestCase
             'title' => $post->title,
             'body' => $post->body,
             'content' => $post->content,
-        'user_id' => $user->id
+            'user_id' => $user->id
     ]);
-    // Collect the response data and only keep the attributes of the post
     $data = collect($response->json("date"))->only(['title', 'body', 'content']);
-    // Dump the response data
-    // Assert that each attribute in the response matches the post
     $data->each(function($value, $key) use ($post) {
         $this->assertSame(data_get($post, $key), $value);
     });
 }
-
-
 }
