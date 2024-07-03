@@ -5,8 +5,8 @@ use App\Models\post;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Repositories\PostRepository;
-use App\Http\Requests\PostStoreRequest;
 use App\Http\Requests\StorepostRequest;
+use App\Http\Requests\Post\PostStoreRequest;
 
 class PostController extends Controller
 {
