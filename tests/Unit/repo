@@ -1,0 +1,25 @@
+<?php
+
+namespace Tests\Unit;
+
+use PHPUnit\Framework\TestCase;
+
+class dump extends TestCase
+{
+    /**
+     * A basic unit test example.
+     */
+    public function test_example(): void
+    {
+        $this->assertTrue(true);
+    }
+    public function create_test(){
+
+    }
+    public function update_test(){
+
+    }
+    public function delete_test(){
+
+    }
+}
