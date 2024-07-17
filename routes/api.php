@@ -1,6 +1,7 @@
 <?php
-use Illuminate\Http\Request;
 use App\Models\User;
+use App\Events\ExampleEvent;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Route;
 // Route::post('/register', [RegisterController::class,"register"]);
@@ -17,6 +18,10 @@ use Illuminate\Support\Facades\Route;
 require __DIR__ . "\api\user.php";
 require __DIR__ . "\api\comment.php";
 require __DIR__ . "\api\post.php";
+Route::get('/broadcast', function () {
+    event(new ExampleEvent('Hello WebSocket'));
+    return 'Event broadcasted!';
+});
 Route::get("/test",function(Request $Request){
     $collection=collect([
         ["name"=>"ahmed"],["name"=>"ali"],["name"=>"yousif"]

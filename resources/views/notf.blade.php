@@ -8,17 +8,33 @@
     @vite(['resources/js/app.js'])
 </head>
 <body>
+    {{-- <div
+    x-init="Echo.join('store.1').here((users)=>{
+    console.log(users);
+    })"
+
+    ></div> --}}
+    <div
+    x-init="
+    const channel=Echo.private('chat');
+    setTimeout(()=>{
+    channel.whisper('typing',{
+    id:1
+    })
+
+    },1000)
+   "
+    ></div>
     <script >
-       Echo.channel("example-channel")
-    .listen("ExampleEvent", (e) => {
-        console.log(e);
-    });
+    //    Echo.channel("example-channel")
+    // .listen("ExampleEvent", (e) => {
+    //     console.log(e);
+    // });
 
     // Echo.channel('example-channel')
     // .listen('.ExampleEvent', (e) => {
     //     console.log('Event received:', e);
     // });
-        console.log(window);
     //     window.Echo.channel('example-channel')
     // .listen('.ExampleEvent', (e) => {
     //     console.log('Event received:', e);
