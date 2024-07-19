@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\conversations;
+use App\Models\User;
+use Database\Factories\FactoryHelper;
 use Illuminate\Database\Seeder;
 use Database\Seeders\Triates\EnableFkey;
 use Database\Seeders\Triates\DisableFkey;
@@ -19,7 +21,13 @@ class ConversationsSeeder extends Seeder
     {
         $this->disableFkey();
         $this->truncate("conversations");
-        conversations::factory(10)->create();
+        $conversations=conversations::factory(10)->create();
         $this->enableFkey();
+        $conversations->each(function ($conversation) {
+            $user = User::factory()->create();
+            // Sync the user with the conversation
+            $conversation->user()->sync([FactoryHelper::factoryHelper(User::class)]);
+            $user->conversations()->sync([$conversation->id]);
+        });
     }
 }

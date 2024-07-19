@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\conversation;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -11,7 +11,7 @@ class StoreconversationsRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,14 @@ class StoreconversationsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+         'user_id'=>'required|numeric'
+        ];
+    }
+    public function messages(): array
+    {
+        return [
+            'user_id.required' => 'The sender ID field is required.',
+            'user_id.numeric' => 'The sender ID must be a number.',
         ];
     }
 }

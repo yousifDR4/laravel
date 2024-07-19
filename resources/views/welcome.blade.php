@@ -21,7 +21,11 @@
             <img id="background" class="absolute -left-20 top-0 max-w-[877px]" src="https://laravel.com/assets/img/welcome/background.svg" />
             <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
                 <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
-                    <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
+                    <header
+                    x-init=" Echo.channel('message.1').listen('messageEvent',(e)=>{
+                    console.log(e);
+                    });"
+                    class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
                         <div
                         x-init="
                             Echo.channel('example-channel')

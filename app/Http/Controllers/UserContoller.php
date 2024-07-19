@@ -15,7 +15,7 @@ class UserContoller extends Controller
      */
     public function index()
     {
-        event(new UserCreated(User::factory()->create()));
+
         $users = User::query()->get();
         return new JsonResponse([
             "data" => $users
@@ -34,7 +34,7 @@ class UserContoller extends Controller
         return new JsonResponse([
             "data" => "created"
         ]);
-        event(new UserCreated($created));
+
     }
     /**
      * Display the specified resource.

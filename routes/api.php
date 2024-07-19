@@ -18,10 +18,13 @@ use Illuminate\Support\Facades\Route;
 require __DIR__ . "\api\user.php";
 require __DIR__ . "\api\comment.php";
 require __DIR__ . "\api\post.php";
-Route::get('/broadcast', function () {
-    event(new ExampleEvent('Hello WebSocket'));
-    return 'Event broadcasted!';
-});
+require __DIR__ . "\api\message.php";
+require __DIR__ . "\api\conversations.php";
+// Route::post('/tokens/create', function (Request $request) {
+//     $token = $request->user()->createToken($request->token_name);
+
+//     return ['token' => $token->plainTextToken];
+// });
 Route::get("/test",function(Request $Request){
     $collection=collect([
         ["name"=>"ahmed"],["name"=>"ali"],["name"=>"yousif"]

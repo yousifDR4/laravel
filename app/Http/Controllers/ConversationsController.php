@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\conversations;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreconversationsRequest;
+
 use App\Http\Requests\UpdateconversationsRequest;
+use App\Http\Requests\conversation\StoreconversationsRequest;
 
 class ConversationsController extends Controller
 {
@@ -22,7 +23,10 @@ class ConversationsController extends Controller
      */
     public function store(StoreconversationsRequest $request)
     {
-        //
+       $user_id=$request->user_id;
+       $conversation=conversations::query()->create();
+       $conversation->user()->sync([$user_id]);
+
     }
 
     /**

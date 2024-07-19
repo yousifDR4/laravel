@@ -14,7 +14,7 @@
     })"
 
     ></div> --}}
-    <div
+    {{-- <div
     x-init="
     const channel=Echo.private('chat');
     setTimeout(()=>{
@@ -24,7 +24,7 @@
 
     },1000)
    "
-    ></div>
+    ></div> --}}
     <script >
     //    Echo.channel("example-channel")
     // .listen("ExampleEvent", (e) => {

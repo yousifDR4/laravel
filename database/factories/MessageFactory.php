@@ -22,7 +22,7 @@ class MessageFactory extends Factory
         return [
             "sender_id"=>$UserId,
             "conversations_id"=>$conversationsId,
-            "body"=>$this->faker->word()
+            "body"=>$this->faker->text()
         ];
     }
 }

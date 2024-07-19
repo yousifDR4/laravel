@@ -1,20 +1,25 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Models\message;
+use App\Events\messageEvent;
+use Illuminate\Http\Request;
+use App\Models\conversations;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoremessageRequest;
+use App\Http\Requests\message\StoremessageRequest;
 use App\Http\Requests\UpdatemessageRequest;
+
 
 class MessageController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(conversations $conversations_id)
     {
-        //
+        $data=message::query()->where("conversations_id","=",$conversations_id->id)->OrderBy("created_at","desc")->get(["body","sender_id","created_at"]);
+        return new JsonResponse(["data"=>$data]);
+
     }
 
     /**
@@ -22,7 +27,13 @@ class MessageController extends Controller
      */
     public function store(StoremessageRequest $request)
     {
-        //
+        $message=message::query()->create([
+            "body"=>$request->body,
+            "sender_id"=>$request->sender_id,
+            "conversations_id"=>$request->conversations_id
+        ]);
+        event(new messageEvent($message, $request->conversations_id));
+        return new JsonResponse([],201);
     }
 
     /**
@@ -44,8 +55,9 @@ class MessageController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(message $message)
+    public function destroy(message $id)
     {
-        //
+        $id->delete();
+        return new JsonResponse(['message' => 'Message deleted successfully'],  202);
     }
 }

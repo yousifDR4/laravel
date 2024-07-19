@@ -14,19 +14,19 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->validateCsrfTokens(except: [
-
-            // "register",
-            // "logout",
-            // "login",
-            // "forgot-password",
-            // "reset-password",
-            // "user/profile-information",
-            //   'broadcasting/auth'
-        ]);
-        $middleware->api(prepend:[
-         "sanctum.auth"
-        ]);
+        // $middleware->validateCsrfTokens(except: [
+        //     "message",
+        //     "register",
+        //     "logout",
+        //     "login",
+        //     "forgot-password",
+        //     "reset-password",
+        //     "user/profile-information",
+        //       'broadcasting/auth'
+        // ]);
+        // $middleware->api(prepend:[
+        //  "sanctum.auth"
+        // ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
 

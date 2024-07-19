@@ -1,13 +1,15 @@
 <?php
 namespace Tests\Feature\api\post;
-use App\Models\post;
-use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\post;
+
+use App\Models\User;
 use function PHPUnit\Framework\assertTrue;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\DatabaseTruncation;
+
 class PostApiTest extends TestCase
-{use RefreshDatabase;
+{
     /**
      * A basic feature test example.
      */
