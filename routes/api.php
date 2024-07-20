@@ -20,6 +20,7 @@ require __DIR__ . "\api\comment.php";
 require __DIR__ . "\api\post.php";
 require __DIR__ . "\api\message.php";
 require __DIR__ . "\api\conversations.php";
+require __DIR__ . "\api\auth.php";
 // Route::post('/tokens/create', function (Request $request) {
 //     $token = $request->user()->createToken($request->token_name);
 

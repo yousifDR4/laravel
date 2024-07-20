@@ -28,8 +28,8 @@ class StoreconversationsRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'user_id.required' => 'The sender ID field is required.',
-            'user_id.numeric' => 'The sender ID must be a number.',
+            'user_id.required' => 'The user ID field is required.',
+            'user_id.numeric' => 'The user ID must be a number.',
         ];
     }
 }

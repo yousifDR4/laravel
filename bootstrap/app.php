@@ -24,9 +24,9 @@ return Application::configure(basePath: dirname(__DIR__))
         //     "user/profile-information",
         //       'broadcasting/auth'
         // ]);
-        // $middleware->api(prepend:[
-        //  "sanctum.auth"
-        // ]);
+
+    }) ->withMiddleware(function (Middleware $middleware) {
+        $middleware->statefulApi();
     })
     ->withExceptions(function (Exceptions $exceptions) {
 
