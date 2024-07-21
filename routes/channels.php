@@ -16,7 +16,11 @@ Broadcast::channel('chat', function ($user) {
     return true ;
 
 });
-Broadcast::channel('chat', function () {
+Broadcast::channel('conv', function () {
+    return true ;
+
+});
+Broadcast::channel('message', function () {
     return true ;
 
 });

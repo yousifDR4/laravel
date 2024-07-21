@@ -32,7 +32,7 @@ class MessageController extends Controller
             "sender_id"=>$request->sender_id,
             "conversations_id"=>$request->conversations_id
         ]);
-        event(new messageEvent($message, $request->conversations_id));
+        broadcast(new messageEvent($message, $request->conversations_id))->toOthers();
         return new JsonResponse([],201);
     }
 
