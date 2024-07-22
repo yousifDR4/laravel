@@ -14,8 +14,11 @@ class group extends Model
     "description",
     "owner_id",
     ];
-    public function message(){
+    public function messages(){
         return $this->hasMany(group::class);
+    }
+    public function last_message(){
+        return $this->belongsTo(message::class,'last_message');
     }
     public function owner(){
         return $this->belongsTo(User::class,'owner_id');

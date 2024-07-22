@@ -15,14 +15,7 @@ return new class extends Migration
         $table->foreignId('last_message')->nullable()->constrained('messages');
         });
 
-        Schema::create('conversation_participants', function (Blueprint $table) {
-            $table->foreignId("conversations_id")->index();
-            $table->foreignId("user_id")->index();
-            $table->foreign("user_id")->on("users")->references("id");
-            $table->foreign("conversations_id")->on("conversations")->references("id");
-            $table->primary(["conversations_id", "user_id"]);
-            $table->timestamps();
-        });
+
     }
 
     /**

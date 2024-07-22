@@ -32,7 +32,6 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
     /**
      * Get the attributes that should be cast.
      *
@@ -53,7 +52,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(conversations::class);
     }
-    public function users(){
+    public function groups(){
         return $this->belongsToMany(group::class,'group_users');
     }
+    public function messages()
+    {
+        return $this->hasMany(message::class);
+    }
+
 }

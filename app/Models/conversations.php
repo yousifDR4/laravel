@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class conversations extends Model
 {
     use HasFactory;
+    protected $fillable=[
+        'user_1','user_2','last_message',
+    ];
     public function user1(){
         return $this->belongsTo(User::class,'user_1');
     }
@@ -14,6 +17,6 @@ class conversations extends Model
         return $this->belongsTo(User::class,'user_2');
     }
     public function last_message(){
-        return $this->hasMany(message::class,"last_message");
+        return $this->belongsTo(message::class,"last_message");
     }
 }

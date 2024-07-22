@@ -16,12 +16,22 @@ class MessageFactory extends Factory
      */
     public function definition(): array
     {
-  $conversationsId=FactoryHelper::factoryHelper(conversations::class);
-   $UserId=FactoryHelper::factoryHelper(User::class);
 
+   $UserId1=FactoryHelper::factoryHelper(User::class);
+   $UserId2=FactoryHelper::factoryHelper(User::class);
+   $conversationId = null;
+        $groupId = null;
+
+        if ($this->faker->boolean(50)) {
+            $conversationId = FactoryHelper::factoryHelper(conversations::class);;
+        } else {
+            $groupId =FactoryHelper::factoryHelper(conversations::class);
+        }
         return [
-            "sender_id"=>$UserId,
-            "conversations_id"=>$conversationsId,
+            "sender_id"=>$UserId1,
+            "reciver_id"=>$groupId ?null:$UserId2,
+            "conversations_id"=>$conversationId,
+            'group_id'=>$groupId,
             "body"=>$this->faker->text()
         ];
     }
