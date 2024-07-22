@@ -39,8 +39,4 @@ Route::get("/test",function(Request $Request){
         // ]);
     });
 
-    Broadcast::channel('friends', function (User $user) {
-        return ["id"=>$user->id] ;
-
-    });
     // Broadcast::routes(['prefix'=>'api','middleware' => ['auth:api']]);

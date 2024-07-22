@@ -11,15 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('messages', function (Blueprint $table) {
+
+        Schema::create('conversations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("conversations_id")->index();
-            $table->foreignId("sender_id")->index();
-            $table->foreign("sender_id")->on("users")->references("id");
-            $table->foreign("conversations_id")->on("conversations")->references("id");
-            $table->text("body");
+            $table->foreignId('user_1')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_2')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
+        // Create messages table next
+        Schema::create('messages', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('conversations_id')->constrained('conversations')->onDelete('cascade');
+            $table->foreignId('sender_id')->constrained('users')->onDelete('cascade');
+            $table->text('body');
+            $table->timestamps();
+        });
+
+        // Add the last_message column to conversations table now that messages table exists
+
     }
 
     /**
@@ -28,5 +37,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('messages');
+        Schema::dropIfExists('conversations');
+
     }
 };
