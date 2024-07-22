@@ -4,7 +4,9 @@ use App\Models\post;
 use App\Models\User;
 use Illuminate\Support\Facades\Broadcast;
 use Laravel\Reverb\Servers\Reverb\Http\Request;
-
+use User as GlobalUser;
+use Workbench\App\Models\User as ModelsUser;
+// Broadcast::routes(['middleware' => ['auth:sanctum']]);
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
@@ -23,4 +25,8 @@ Broadcast::channel('conv', function () {
 Broadcast::channel('message', function () {
     return true ;
 
+});
+
+Broadcast::channel('friends.{roomId}', function (User $user, $roomId) {
+    return true;
 });

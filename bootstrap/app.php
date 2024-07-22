@@ -15,13 +15,6 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         // $middleware->validateCsrfTokens(except: [
-        //     "message",
-        //     "register",
-        //     "logout",
-        //     "login",
-        //     "forgot-password",
-        //     "reset-password",
-        //     "user/profile-information",
         //       'broadcasting/auth'
         // ]);
 
@@ -30,4 +23,7 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
 
-    })->create();
+    })->withBroadcasting(
+        __DIR__.'/../routes/channels.php',
+        ['prefix' => 'api', 'middleware' => ['api', 'auth:sanctum']],
+    )->create();

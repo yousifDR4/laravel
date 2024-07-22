@@ -35,8 +35,12 @@ Route::get("/test",function(Request $Request){
     //     return $items["name"]==="ali";
     // });
         // return new JsonResponse([
-        //     "data"=>$id
+        //     "data"=>$ids
         // ]);
     });
 
+    Broadcast::channel('friends', function (User $user) {
+        return ["id"=>$user->id] ;
 
+    });
+    // Broadcast::routes(['prefix'=>'api','middleware' => ['auth:api']]);

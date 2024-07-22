@@ -40,8 +40,10 @@
             },
             credentials: "include",
             body: JSON.stringify({
-                "email": "dd@example.com",
-                "password": "password"
+                "email":  "yousifd39@gmail.com",
+                "password": "Password"
+
+
             })
         }).then(response => {
             if (response.ok) {
