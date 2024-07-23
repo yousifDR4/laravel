@@ -47,13 +47,16 @@ class MessageFactory extends Factory
         $groupId = null;
         $UserId1 = FactoryHelper::factoryHelper(User::class);
         $UserId2 = null;
-        if ($this->faker->boolean(50)) {
+        if ($this->faker->boolean(70)) {
             $conversationId = FactoryHelper::factoryHelper(conversations::class);
             $conversation = conversations::find($conversationId);
             $UserId1 = $conversation->user_1;
             $UserId2 = $conversation->user_2;
         } else {
             $groupId = FactoryHelper::factoryHelper(group::class);
+            $group = group::find($groupId);
+            $group->users()->attach($UserId1);
+
         }
 
         return [

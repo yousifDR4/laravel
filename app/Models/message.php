@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\conversations;
-use Workbench\App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -19,7 +18,7 @@ class message extends Model
     {
         return $this->belongsTo(User::class, "sender_id");
     }
-    public function reciver()
+    public function receiver()
     {
         return $this->belongsTo(User::class, 'receiver_id');
     }

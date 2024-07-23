@@ -52,12 +52,17 @@ class User extends Authenticatable
     {
         return $this->hasMany(conversations::class);
     }
-    public function groups(){
-        return $this->belongsToMany(group::class,'group_users');
-    }
-    public function messages()
+    public function groups()
     {
-        return $this->hasMany(message::class);
+        return $this->belongsToMany(group::class, 'group_users');
+    }
+    public function messages_send()
+    {
+        return $this->hasMany(message::class, "sender_id");
+    }
+    public function messages_received()
+    {
+        return $this->hasMany(message::class, "receiver_id");
     }
 
 }

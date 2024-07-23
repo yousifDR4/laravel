@@ -18,7 +18,7 @@ class MessageSeeder extends Seeder
     {
         $this->disableFkey();
         $this->truncate("messages");
-        message::factory(3000)->create();
+        message::factory(30)->create();
         $this->enableFkey();
     }
 }
