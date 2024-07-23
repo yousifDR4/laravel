@@ -19,12 +19,12 @@ class GroupFactory extends Factory
     public function definition(): array
     {
 
-   $last_message=FactoryHelper::factoryHelper(message::class);
-   $owner_id=FactoryHelper::factoryHelper(User::class);
+        $owner_id = FactoryHelper::factoryHelper(User::class);
         return [
-            'name' => $this->faker->word, 'descripition' => $this->faker->text(),
-            'owner_id'=>$owner_id,
-             'last_message'=>$last_message
+            'name' => $this->faker->word,
+            'description' => $this->faker->word,
+            'owner_id' => $owner_id,
+            'last_message' => null
         ];
     }
 }

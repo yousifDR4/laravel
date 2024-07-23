@@ -13,7 +13,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class ConversationsSeeder extends Seeder
 {
-    use TruncateTable,EnableFkey,DisableFkey;
+    use TruncateTable, EnableFkey, DisableFkey;
     /**
      * Run the database seeds.
      */
@@ -21,13 +21,13 @@ class ConversationsSeeder extends Seeder
     {
         $this->disableFkey();
         $this->truncate("conversations");
-        $conversations=conversations::factory(10)->create();
+        conversations::factory(5)->create();
         $this->enableFkey();
-        $conversations->each(function ($conversation) {
-            $user = User::factory()->create();
-            // Sync the user with the conversation
-            $conversation->user()->sync([FactoryHelper::factoryHelper(User::class)]);
-            $user->conversations()->sync([$conversation->id]);
-        });
+        // $conversations->each(function ($conversation) {
+        //     $user = User::factory()->create();
+        //     // Sync the user with the conversation
+        //     $conversation->user()->sync([FactoryHelper::factoryHelper(User::class)]);
+        //     $user->conversations()->sync([$conversation->id]);
+        // });
     }
 }

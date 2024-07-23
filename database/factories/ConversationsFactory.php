@@ -18,11 +18,16 @@ class ConversationsFactory extends Factory
      */
     public function definition(): array
     {
-        $user_1=FactoryHelper::factoryHelper(User::class);
-        $user_2=FactoryHelper::factoryHelper(User::class);
-        $last_message=FactoryHelper::factoryHelper(message::class);
+        $user_1 = FactoryHelper::factoryHelper(User::class);
+        $user_2 = FactoryHelper::factoryHelper(User::class);
+        if ($user_1 == $user_2) {
+            $user_1 += 1;
+        }
+
         return [
-            'user_1'=>$user_1,'user_2'=>$user_2,'last_message'=>$last_message,
+            'user_1' => $user_1,
+            'user_2' => $user_2,
+            'last_message' => null,
         ];
     }
 }

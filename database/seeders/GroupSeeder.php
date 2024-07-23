@@ -1,14 +1,15 @@
 <?php
+
 namespace Database\Seeders;
 
-use App\Models\message;
+use App\Models\group;
 use Illuminate\Database\Seeder;
 use Database\Seeders\Triates\EnableFkey;
 use Database\Seeders\Triates\DisableFkey;
 use Database\Seeders\Triates\TruncateTable;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class MessageSeeder extends Seeder
+class GroupSeeder extends Seeder
 {
     use TruncateTable, EnableFkey, DisableFkey;
     /**
@@ -17,8 +18,8 @@ class MessageSeeder extends Seeder
     public function run(): void
     {
         $this->disableFkey();
-        $this->truncate("messages");
-        message::factory(3000)->create();
+        $this->truncate("groups");
+        group::factory(5)->create();
         $this->enableFkey();
     }
 }
