@@ -58,6 +58,7 @@ class User extends Authenticatable
     }
     public function messages_send()
     {
+        // get all user send messages when fallow by get
         return $this->hasMany(message::class, "sender_id");
     }
     public function messages_received()

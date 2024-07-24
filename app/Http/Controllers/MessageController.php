@@ -1,7 +1,11 @@
 <?php
 namespace App\Http\Controllers;
+
 use App\Models\message;
 use App\Events\messageEvent;
+
+use App\Services\MessagesServices\messagesServices;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\conversations;
 use Illuminate\Http\JsonResponse;
@@ -15,11 +19,22 @@ class MessageController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function __construct(protected messagesServices $messagesServices)
+    {
+
+    }
     public function index(conversations $conversations_id)
     {
-        $data=message::query()->where("conversations_id","=",$conversations_id->id)->OrderBy("created_at","desc")->get(["body","sender_id","created_at"]);
-        return new JsonResponse(["data"=>$data]);
+        $data = message::query()->where("conversations_id", "=", $conversations_id->id)->OrderBy("created_at", "desc")->get(["body", "sender_id", "created_at"]);
+        return new JsonResponse(["data" => $data]);
 
+    }
+    public function getAllUserWithLastMessage(request $request, $id)
+    {
+        // $data = $this->messagesServices->getuserConversationsLastMessage($id);
+        // $data = $this->messagesServices->getuserGroupsLastMessage($id)->get();
+        $data = $this->messagesServices->getGroupsUsers($id)->get();
+        return new JsonResponse(['data' => $data]);
     }
 
     /**
@@ -27,13 +42,13 @@ class MessageController extends Controller
      */
     public function store(StoremessageRequest $request)
     {
-        $message=message::query()->create([
-            "body"=>$request->body,
-            "sender_id"=>$request->sender_id,
-            "conversations_id"=>$request->conversations_id
+        $message = message::query()->create([
+            "body" => $request->body,
+            "sender_id" => $request->sender_id,
+            "conversations_id" => $request->conversations_id
         ]);
         broadcast(new messageEvent($message, $request->conversations_id))->toOthers();
-        return new JsonResponse([],201);
+        return new JsonResponse([], 201);
     }
 
     /**
@@ -58,6 +73,6 @@ class MessageController extends Controller
     public function destroy(message $id)
     {
         $id->delete();
-        return new JsonResponse(['message' => 'Message deleted successfully'],  202);
+        return new JsonResponse(['message' => 'Message deleted successfully'], 202);
     }
 }
