@@ -31,10 +31,10 @@ class MessageController extends Controller
     }
     public function getAllUserWithLastMessage(request $request, $id)
     {
-        // $data = $this->messagesServices->getuserConversationsLastMessage($id);
-        // $data = $this->messagesServices->getuserGroupsLastMessage($id)->get();
-        $data = $this->messagesServices->getGroupsUsers($id)->get();
-        return new JsonResponse(['data' => $data]);
+        $data1 = $this->messagesServices->getuserConversationsLastMessage($id);
+        $data2 = $this->messagesServices->getGroupsUsers($id)->get();
+        $data3 = $data1->concat($data2)->sortByDesc("message_created_at", );
+        return new JsonResponse(['$data' => $data3]);
     }
 
     /**

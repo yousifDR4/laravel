@@ -27,10 +27,10 @@ class UserContoller extends Controller
      */
     public function store(Request $request)
     {
-        $created=User::query()->create([
-            "email"=>$request->email,
-          "name"=>$request->name
-          ]);
+        $created = User::query()->create([
+            "email" => $request->email,
+            "name" => $request->name
+        ]);
         return new JsonResponse([
             "data" => "created"
         ]);
@@ -68,4 +68,5 @@ class UserContoller extends Controller
             "data" => $id
         ]);
     }
+
 }
