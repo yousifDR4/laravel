@@ -4,6 +4,7 @@ use App\Events\ExampleEvent;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Route;
+
 // Route::post('/register', [RegisterController::class,"register"]);
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -21,22 +22,25 @@ require __DIR__ . "\api\post.php";
 require __DIR__ . "\api\message.php";
 require __DIR__ . "\api\conversations.php";
 require __DIR__ . "\api\auth.php";
+require __DIR__ . "\api\groupRoutes.php";
 // Route::post('/tokens/create', function (Request $request) {
 //     $token = $request->user()->createToken($request->token_name);
 
 //     return ['token' => $token->plainTextToken];
 // });
-Route::get("/test",function(Request $Request){
-    $collection=collect([
-        ["name"=>"ahmed"],["name"=>"ali"],["name"=>"yousif"]
+Route::get("/test", function (Request $Request) {
+    $collection = collect([
+        ["name" => "ahmed"],
+        ["name" => "ali"],
+        ["name" => "yousif"]
     ]);
     return $collection->all();
     // return $collection->filter(function ($items){
     //     return $items["name"]==="ali";
     // });
-        // return new JsonResponse([
-        //     "data"=>$ids
-        // ]);
-    });
+    // return new JsonResponse([
+    //     "data"=>$ids
+    // ]);
+});
 
-    // Broadcast::routes(['prefix'=>'api','middleware' => ['auth:api']]);
+// Broadcast::routes(['prefix'=>'api','middleware' => ['auth:api']]);

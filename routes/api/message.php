@@ -6,9 +6,9 @@ use App\Http\Middleware\AuthorizedConversation;
 // add auth middlware to authintacit user
 route::withoutMiddleware("")->group(function () {
     Route::post("message", [MessageController::class, "store"]);
-    Route::get("messages/{conversations_id}", [MessageController::class, "index"]);
+    Route::get("messages/group/{group_id}", [MessageController::class, "group"]);
     Route::delete("message/{id}", [MessageController::class, "destroy"]);
-    Route::get("usersLastMessage/{id}", [MessageController::class, "getAllUserWithLastMessage"]);
+    Route::get("conversations/messages/{id}", [MessageController::class, "getAllUserWithLastMessage"]);
 
 });
 

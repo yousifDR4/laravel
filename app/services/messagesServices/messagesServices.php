@@ -14,7 +14,7 @@ class messagesServices
             ->where('user_2', '!=', $userId);
 
         $second = DB::table('conversations')
-            ->select('conversations.id as onversation_id', 'conversations.user_1 as uid', 'conversations.last_message')
+            ->select('conversations.id as conversation_id', 'conversations.user_1 as uid', 'conversations.last_message')
             ->where('user_1', '!=', $userId)
             ->where('user_2', $userId)
             ->unionAll($first);
@@ -24,12 +24,12 @@ class messagesServices
             ->mergeBindings($second)->join('users', 'users.id', '=', 'combined_conversations.uid')->
             leftJoin('messages', 'messages.id', '=', 'combined_conversations.last_message')
             ->orderBy('messages.created_at', 'desc')
-            ->get(['name', 'uid', 'last_message', 'onversation_id', 'body', 'messages.created_at as message_created_at', 'messages.sender_id']);
+            ->get(['name', 'uid', 'last_message', 'conversation_id', 'body', 'messages.created_at as message_created_at', 'messages.sender_id']);
         return $combinedConversations;
     }
     public function getuserGroupsLastMessage($userId)
     {
-        $data = DB::table('users')->select('users.id as uid', 'group_users.group_id', 'groups.last_message', 'messages.id as message_id', 'messages.body', 'messages.sender_id', 'messages.created_at as message_created_at')->
+        $data = DB::table('users')->select('users.id as current_user_id', 'group_users.group_id', 'groups.last_message', 'messages.id as message_id', 'messages.body', 'messages.sender_id', 'messages.created_at as message_created_at', )->
             join('group_users', 'group_users.user_id', '=', 'users.id')->
             join('groups', 'groups.id', '=', 'group_users.group_id')
             ->join('messages', 'messages.id', '=', 'groups.last_message')->
@@ -41,9 +41,8 @@ class messagesServices
     {
         $currentUserGroups = $this->getuserGroupsLastMessage($userId);
         $GroupsUsers = DB::table(DB::raw("({$currentUserGroups->toSql()}) as currentUserGroups"))
-            ->mergeBindings($currentUserGroups)
-            ->join('group_users', 'group_users.group_id', '=', 'currentUserGroups.group_id')
-            ->select('message_created_at', 'body', 'group_users.user_id as uid', 'last_message', 'sender_id', 'group_users.group_id')->where('group_users.user_id', '!=', $userId);
+            ->mergeBindings($currentUserGroups)->join("users", "users.id", "=", 'sender_id')
+            ->select('id as uid', 'body', 'sender_id', 'users.name', 'picture', 'message_created_at', 'group_id');
         return $GroupsUsers;
     }
 

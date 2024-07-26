@@ -23,18 +23,37 @@ class MessageController extends Controller
     {
 
     }
-    public function index(conversations $conversations_id)
+    public function index(request $request, $conversations_id)
     {
-        $data = message::query()->where("conversations_id", "=", $conversations_id->id)->OrderBy("created_at", "desc")->get(["body", "sender_id", "created_at"]);
-        return new JsonResponse(["data" => $data]);
 
     }
+
     public function getAllUserWithLastMessage(request $request, $id)
     {
         $data1 = $this->messagesServices->getuserConversationsLastMessage($id);
         $data2 = $this->messagesServices->getGroupsUsers($id)->get();
-        $data3 = $data1->concat($data2)->sortByDesc("message_created_at", );
-        return new JsonResponse(['$data' => $data3]);
+        $data3 = $data1->concat($data2);
+        $dataFiltered = $data3->filter(function ($item) {
+            return (isset($item->group_id) && !is_null($item->group_id)) ||
+                (isset($item->conversation_id) && !is_null($item->conversation_id));
+        });
+
+        // Debugging the filtered data to verify structure
+
+        // Group by either 'group_id' or 'conversation_id'
+        $dataGrouped = $dataFiltered->groupBy(function ($item) {
+            if (isset($item->group_id) && !is_null($item->group_id)) {
+                return 'group_' . $item->group_id;
+            } elseif (isset($item->conversation_id) && !is_null($item->conversation_id)) {
+                return 'conversation_' . $item->conversation_id;
+            }
+            return 'undefined';
+        })->map(function ($group) {
+            return $group->sortByDesc('message_created_at')->values(); // Ensure the sorted collection is reindexed
+        })->filter(function ($value, $key) {
+            return $key !== 'undefined';
+        });
+        return new JsonResponse(['data' => $dataGrouped]);
     }
 
     /**
