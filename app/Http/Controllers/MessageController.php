@@ -32,7 +32,7 @@ class MessageController extends Controller
     {
         $data1 = $this->messagesServices->getuserConversationsLastMessage($id);
         $data2 = $this->messagesServices->getGroupsUsers($id)->get();
-        $data3 = $data1->concat($data2);
+        $data3 = $data1->concat($data2)->sortByDesc('message_created_at');
         $dataFiltered = $data3->filter(function ($item) {
             return (isset($item->group_id) && !is_null($item->group_id)) ||
                 (isset($item->conversation_id) && !is_null($item->conversation_id));

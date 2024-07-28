@@ -33,7 +33,7 @@ class messagesServices
             join('group_users', 'group_users.user_id', '=', 'users.id')->
             join('groups', 'groups.id', '=', 'group_users.group_id')
             ->join('messages', 'messages.id', '=', 'groups.last_message')->
-            where('users.id', '=', $userId)
+            where('users.id', '=', $userId)->orderBy('message_created_at', 'desc')
         ;
         return $data;
     }
