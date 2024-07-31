@@ -12,15 +12,15 @@ return new class extends Migration {
     {
         Schema::create('conversations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_1')->constrained('users')->onDelete('cascade');
-            $table->foreignId('user_2')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_1')->index()->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_2')->index()->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->foreignId('conversations_id')->nullable()->constrained('conversations')->onDelete('cascade');
-            $table->foreignId('sender_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('receiver_id')->nullable()->constrained('users');
+            $table->foreignId('sender_id')->index()->constrained('users')->onDelete('cascade');
+            $table->foreignId('receiver_id')->index()->nullable()->constrained('users');
             $table->text('body')->nullable();
             $table->timestamps();
         });

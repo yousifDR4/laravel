@@ -21,7 +21,7 @@ class ConversationsSeeder extends Seeder
     {
         $this->disableFkey();
         $this->truncate("conversations");
-        conversations::factory(5)->create();
+        conversations::factory(40)->create();
         $this->enableFkey();
         // $conversations->each(function ($conversation) {
         //     $user = User::factory()->create();

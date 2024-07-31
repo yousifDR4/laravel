@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\message;
@@ -9,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateconversationsRequest;
 use App\Http\Requests\conversation\StoreconversationsRequest;
+use Illuminate\Support\Facades\DB;
 
 class ConversationsController extends Controller
 {
@@ -25,10 +25,29 @@ class ConversationsController extends Controller
      */
     public function store(StoreconversationsRequest $request)
     {
-        $user_id = $request->user_id;
-        $conversation = conversations::query()->create();
-        $conversation->user()->sync([$user_id]);
+        $created = DB::transaction(function () use ($request) {
+            try {
+                $user1_id = $request->user_1;
+                $user2_id = $request->user_2;
+                $body = $request->body;
 
+                $conversation = conversations::query()->create([
+                    'user_1' => $user1_id,
+                    'user_2' => $user2_id,
+                ]);
+                message::create([
+                    "receiver_id" => $user2_id,
+                    "body" => $body,
+                    'sender_id' => $user1_id,
+                    "conversations_id" => $conversation->id
+                ]);
+                return 201;
+
+            } catch (\Exception $e) {
+                return 404;
+            }
+        });
+        return new JsonResponse([], $created);
     }
 
     /**

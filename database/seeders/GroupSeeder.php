@@ -19,7 +19,7 @@ class GroupSeeder extends Seeder
     {
         $this->disableFkey();
         $this->truncate("groups");
-        group::factory(5)->create();
+        group::factory(40)->create();
         $this->enableFkey();
     }
 }

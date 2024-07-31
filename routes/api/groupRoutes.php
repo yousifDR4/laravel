@@ -6,5 +6,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(groupController::class)->group(function () {
     Route::get('groups/{group_id}/messages', 'index');
+    Route::get('group/{group_id}/users', 'members');
 
 });

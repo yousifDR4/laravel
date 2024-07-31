@@ -23,15 +23,43 @@ class MessageController extends Controller
     {
 
     }
-    public function index(request $request, $conversations_id)
+    public function index(request $request)
     {
+        $conversation_ids = collect($request->query('conversation_ids'))->map(function ($a) {
+            return $a + 0;
+        });
+        $groups_ids = collect($request->query('groups_ids'))->map(function ($a) {
+            return $a + 0;
+        });
+        $groups_messages = $groups_ids->map(function ($group) {
+            return message::query()->where("group_id", $group)->orderBy('created_at', 'desc')->paginate(10)->items();
+        })->collect();
+        $conversation_messages = $conversation_ids->map(function ($conversation) {
+            return message::query()->where("conversations_id", $conversation)->orderBy('created_at', 'desc')->paginate(10)->items();
+        })->collect();
 
+
+        $messages = collect($groups_messages->concat($conversation_messages))->groupBy(function ($items) {
+            // dump($items[0]['conversations_id']);
+            if (isset($items[0]['group_id']) && !is_null($items[0]['group_id'])) {
+                return 'group_' . $items[0]['group_id'];
+            } elseif (isset($items[0]['conversations_id']) && !is_null($items[0]['conversations_id'])) {
+                return 'conversation_' . $items[0]['conversations_id'];
+            }
+            return 'undefined';
+
+        })->map(function ($items) {
+            return $items[0];
+        })->filter(function ($value, $key) {
+            return $key !== 'undefined';
+        });
+        return new JsonResponse($messages);
     }
 
     public function getAllUserWithLastMessage(request $request, $id)
     {
         $data1 = $this->messagesServices->getuserConversationsLastMessage($id);
-        $data2 = $this->messagesServices->getGroupsUsers($id)->get();
+        $data2 = $this->messagesServices->getGroupsUsers($id);
         $data3 = $data1->concat($data2)->sortByDesc('message_created_at');
         $dataFiltered = $data3->filter(function ($item) {
             return (isset($item->group_id) && !is_null($item->group_id)) ||

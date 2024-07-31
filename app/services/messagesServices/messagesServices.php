@@ -24,7 +24,8 @@ class messagesServices
             ->mergeBindings($second)->join('users', 'users.id', '=', 'combined_conversations.uid')->
             leftJoin('messages', 'messages.id', '=', 'combined_conversations.last_message')
             ->orderBy('messages.created_at', 'desc')
-            ->get(['name', 'uid', 'last_message', 'conversation_id', 'body', 'messages.created_at as message_created_at', 'messages.sender_id']);
+            ->select('name', 'uid', 'last_message', 'conversation_id', 'body', 'messages.created_at as message_created_at', 'messages.sender_id')->paginate(10);
+
         return $combinedConversations;
     }
     public function getuserGroupsLastMessage($userId)
@@ -42,7 +43,7 @@ class messagesServices
         $currentUserGroups = $this->getuserGroupsLastMessage($userId);
         $GroupsUsers = DB::table(DB::raw("({$currentUserGroups->toSql()}) as currentUserGroups"))
             ->mergeBindings($currentUserGroups)->join("users", "users.id", "=", 'sender_id')
-            ->select('id as uid', 'body', 'sender_id', 'users.name', 'picture', 'message_created_at', 'group_id');
+            ->select('id as uid', 'body', 'sender_id', 'users.name', 'picture', 'message_created_at', 'group_id')->paginate(10);
         return $GroupsUsers;
     }
 

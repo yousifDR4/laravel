@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
     {
         $this->disableFkey();
         $this->truncate("users");
-        $user = User::factory(15)->create();
+        $user = User::factory(30)->create();
         $this->enableFkey();
     }
 }

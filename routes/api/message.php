@@ -7,8 +7,9 @@ use App\Http\Middleware\AuthorizedConversation;
 route::withoutMiddleware("")->group(function () {
     Route::post("message", [MessageController::class, "store"]);
     Route::get("messages/group/{group_id}", [MessageController::class, "group"]);
+    Route::get("groups/conversations/messages", [MessageController::class, "index"]);
     Route::delete("message/{id}", [MessageController::class, "destroy"]);
-    Route::get("conversations/messages/{id}", [MessageController::class, "getAllUserWithLastMessage"]);
+    Route::get("conversations/user/{id}/messages", [MessageController::class, "getAllUserWithLastMessage"]);
 
 });
 

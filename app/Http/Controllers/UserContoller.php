@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\UserCreated;
 use App\Models\comment;
+use App\Services\userservices\getusersservices;
 use Illuminate\Http\JsonResponse;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,6 +21,15 @@ class UserContoller extends Controller
         return new JsonResponse([
             "data" => $users
         ]);
+    }
+    public function __construct(public getusersservices $getusersservices)
+    {
+
+    }
+    public function unrealtedusers(Request $request, $id)
+    {
+        $data = $this->getusersservices->getUnrealteduUers($id);
+        return response()->json($data);
     }
 
     /**
